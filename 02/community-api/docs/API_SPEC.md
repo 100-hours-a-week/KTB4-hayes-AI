@@ -144,7 +144,7 @@ URL: /posts/{post_id}
         "content": "이것은 본문 내용입니다.",
         "author": "user1",
         "created_at": "2026-05-23T15:00:00"
-        "comment": [
+        "comments": [
 	        {
 		        "id": 101,
 		        "content": "댓글입니다."
