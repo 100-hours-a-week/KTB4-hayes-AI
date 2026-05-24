@@ -1,22 +1,20 @@
 # database.py
 
-from sqlmodel import Field, SQLModel, Session, create_engine
+from sqlmodel import Session, SQLModel, create_engine
+
+from community_api.models.Post import Post
+from community_api.models.Comment import Comment
 
 
-class Post(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    title: str
-    content: str
-    author: str
-    created_at: str
+DATABASE_URL = "sqlite:///database.db"
+
+engine = create_engine(DATABASE_URL, echo=True)
 
 
-class Comment(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    post_id: int = Field(foreign_key="post.id", index=True)
-    content: str
-    author: str
-    created_at: str
+def create_db_table():
+    SQLModel.metadata.create_all(engine)
 
 
-engine = create_engine("sqlite:///database.db")
+def get_session():
+    with Session(engine) as session:
+        yield session
