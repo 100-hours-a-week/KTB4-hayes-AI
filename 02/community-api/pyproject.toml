@@ -5,7 +5,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi>=0.136.3",
     "sqlmodel>=0.0.38",
+    "uvicorn>=0.48.0",
 ]
 
 [dependency-groups]
@@ -15,6 +17,9 @@ dev = [
 
 [tool.ruff.format]
 preview = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
 
 [build-system]
 requires = ["setuptools>=61"]
