@@ -3,10 +3,9 @@
 # 게시글 목록 조회
 
 카테고리: 게시글
-설명: page와 size를 사용하여 게시글 목록을 조회합니다.
+설명: 게시글 목록을 조회합니다.
 Method: GET
 URL: /posts
-param: page, size
 사용자: 유저
 
 ### Request
@@ -18,17 +17,12 @@ param: page, size
 
 **Query parameter**
 
-`/posts?page=1&size=10`
-
-1. page
-2. size
 
 ### Response
 
 | key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
 | --- | --- | --- | --- | --- | --- |
 | result.total_count | 전체 게시글 개수 | integer |  | not null | 150 |
-| result.page | 현재 페이지 | integer |  | not null | 1 |
 | result.items | 게시글 데이터 리스트 | array |  | not null | [{ … }] |
 | result.items[].id | 게시글 고유 ID | integer |  | not null | 45 |
 | result.items[].title | 게시글 제목 | string |  | not null | “첫 번째 게시글입니다.” |
@@ -46,7 +40,6 @@ param: page, size
 	"timestamp": "2026-05-23T17:00:00",
 	"result": {
 		"total_count": 100,
-		"page": 1,
 		"items": [
 			{
 				"id": 45,
@@ -365,6 +358,102 @@ Path variable
 }
 ```
 
+# 게시글 요약
+
+카테고리: 게시글
+설명: 게시글 본문을 요약합니다.
+Method: POST
+URL: /posts/{post_id}/summary
+사용자: 유저
+
+# Request
+
+| key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
+| --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+
+**Example**
+
+```jsx
+{
+	
+}
+```
+
+**Query parameter**
+
+| key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
+| --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+
+Path variable
+
+| key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
+| --- | --- | --- | --- | --- | --- |
+| post_id | 요약할 게시글 id | integer |  | not null | 45 |
+|  |  |  |  |  |  |
+
+# Response
+
+| key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
+| --- | --- | --- | --- | --- | --- |
+| result.id | 요약한 게시글 | integer |  | not null | 45 |
+| result.summary | 요약 내용 | str |  | not null | “요약 내용입니다.” |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+
+**Example**
+
+```jsx
+{
+  "success": true,
+  "status": 200,
+  "code": "SUCCESS",
+  "message": "게시글 요약에 성공했습니다.",
+  "timestamp": "2026-05-23T17:00:00",
+  "result": {
+    "id": 45,
+    "summary": "요약 내용입니다."
+  }
+}
+```
+
+# Status
+
+| status | response content |
+| --- | --- |
+| 200 | 성공 |
+| 400 | 잘못된 요청 |
+| 500 | 서버오류 |
+
+#### 400 - 잘못된 요청
+
+```json
+{
+	"success": false,
+	"status": 400,
+	"code": "BAD_REQUEST",
+	"message": "잘못된 요청입니다.",
+	"timestamp": "2026-05-23T17:00:00",
+	"result": null
+}
+```
+
+#### 500 - 서버오류
+
+```json
+{
+	"success": false,
+	"status": 500,
+	"code": "INTERNAL_SERVER_ERROR",
+	"message": "서버 내부 오류가 발생했습니다.",
+	"timestamp": "2026-05-23T17:00:00",
+	"result": null
+}
+```
+
 # 댓글 작성
 
 카테고리: 댓글
@@ -553,3 +642,72 @@ Path variable
 	"result": null
 }
 ```
+
+# 댓글 요약
+
+카테고리: 댓글
+설명: 해당 글 댓글 전체를 요약합니다.
+Method: POST
+URL: /posts/{post_id}/comments/summary
+사용자: 유저
+
+# Request
+
+| key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
+| --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+
+**Example**
+
+```jsx
+{
+	
+}
+```
+
+**Query parameter**
+
+| key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
+| --- | --- | --- | --- | --- | --- |
+| post_id | 댓글 요약할 게시글 id | integer |  | not null | 45 |
+|  |  |  |  |  |  |
+
+Path variable
+
+| key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
+| --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+
+# Response
+
+| key | 설명 | value 타입 | 옵션 | Nullable | 예시 |
+| --- | --- | --- | --- | --- | --- |
+| result.id | 댓글을 전체 요약한 게시글 id | integer |  | not null | 45 |
+| result.summary | 요약 내용 | str |  | not null | “요약 내용입니다.” |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+
+**Example**
+
+```jsx
+{
+  "success": true,
+  "status": 200,
+  "code": "SUCCESS",
+  "message": "댓글 요약에 성공했습니다.",
+  "timestamp": "2026-05-23T17:00:00",
+  "result": {
+    "id": 45,
+    "summary": "요약 내용입니다."
+  }
+}
+```
+
+# Status
+
+| status | response content |
+| --- | --- |
+| 200 |  |
+| 400 |  |
