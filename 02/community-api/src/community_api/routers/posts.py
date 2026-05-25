@@ -18,6 +18,10 @@ from community_api.schemas.post_schema import (
     ListPostsItem,
     ListPostsResponse,
     ListPostsResult,
+    SummarizeCommentsResponse,
+    SummarizeCommentsResult,
+    SummarizePostResponse,
+    SummarizePostResult,
 )
 
 router = APIRouter(prefix="/posts", tags=["posts"])
@@ -105,4 +109,40 @@ def remove_post(post_id: int, session: Session = Depends(get_session)):
         message="게시글 삭제에 성공했습니다.",
         timestamp=datetime.now(),
         result=None,
+    )
+
+
+@router.post("/{post_id}/summary", response_model=SummarizePostResponse)
+def summarize_post(post_id: int, session: Session = Depends(get_session)):
+    result = post_controller.summarize_post(session, post_id)
+    if result is None:
+        raise HTTPException(status_code=400, detail="잘못된 요청입니다.")
+
+    post_id, summary = result
+
+    return SummarizePostResponse(
+        success=True,
+        status=200,
+        code="SUCCESS",
+        message="게시글 요약에 성공했습니다.",
+        timestamp=datetime.now(),
+        result=SummarizePostResult(id=post_id, summary=summary),
+    )
+
+
+@router.post("/{post_id}/comments/summary", response_model=SummarizeCommentsResponse)
+def summarize_comments(post_id: int, session: Session = Depends(get_session)):
+    result = post_controller.summarize_comment(session, post_id)
+    if result is None:
+        raise HTTPException(status_code=400, detail="잘못된 요청입니다.")
+
+    post_id, summary = result
+
+    return SummarizeCommentsResponse(
+        success=True,
+        status=200,
+        code="SUCCESS",
+        message="댓글 요약에 성공했습니다.",
+        timestamp=datetime.now(),
+        result=SummarizeCommentsResult(id=post_id, summary=summary),
     )

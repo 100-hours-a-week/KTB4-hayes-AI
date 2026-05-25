@@ -105,3 +105,45 @@ class DeletePostResponse(SQLModel):
     message: str
     timestamp: datetime
     result: None = None
+
+
+# =========================================
+# POST /posts/{post_id}/summary (게시글 요약)
+# =========================================
+
+
+# 게시글 요약 result
+class SummarizePostResult(SQLModel):
+    id: int
+    summary: str
+
+
+# 게시글 요약 전체 응답
+class SummarizePostResponse(SQLModel):
+    success: bool
+    status: int
+    code: str
+    message: str
+    timestamp: datetime
+    result: SummarizePostResult
+
+
+# =========================================
+# POST /posts/{post_id}/comments/summary (댓글 전체 요약)
+# =========================================
+
+
+# 댓글 요약 result
+class SummarizeCommentsResult(SQLModel):
+    id: int
+    summary: str
+
+
+# 댓글 요약 전체 응답
+class SummarizeCommentsResponse(SQLModel):
+    success: bool
+    status: int
+    code: str
+    message: str
+    timestamp: datetime
+    result: SummarizeCommentsResult
